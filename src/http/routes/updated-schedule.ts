@@ -1,8 +1,5 @@
-// // import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
-import { z } from 'zod'
-// // import { createUser } from '../../use-cases/create-user'
-
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
+import { z } from 'zod'
 import { updatedSchedule } from '../../use-cases/updated-schedule'
 import { authenticateUserHook } from '../hooks/authenticate-user'
 
