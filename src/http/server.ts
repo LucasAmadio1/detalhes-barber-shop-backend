@@ -12,6 +12,7 @@ import { env } from '../env'
 import { createScheduleRoute } from './routes/create-schedule'
 import { createUserRoute } from './routes/create-user'
 import { deleteScheduleRoute } from './routes/delete-schedule'
+import { getSchedulesRoute } from './routes/get-schedules'
 import { signInRoute } from './routes/sign-in'
 import { updatedScheduleRoute } from './routes/updated-schedule'
 
@@ -43,6 +44,7 @@ app.register(signInRoute)
 app.register(createScheduleRoute)
 app.register(updatedScheduleRoute)
 app.register(deleteScheduleRoute)
+app.register(getSchedulesRoute)
 
 app
   .listen({

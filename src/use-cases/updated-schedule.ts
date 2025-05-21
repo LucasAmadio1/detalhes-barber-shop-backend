@@ -17,6 +17,10 @@ export async function updatedSchedule({
   const dateTimeString = `${date} ${time}`
   const scheduleAt = parse(dateTimeString, 'dd/MM/yyyy HH:mm', new Date())
 
+  if (scheduleAt < new Date()) {
+    throw new Error('You cannot schedule an appointment in the past.')
+  }
+
   if (!isValid(scheduleAt)) {
     throw new Error('Invalid date/time format.')
   }
