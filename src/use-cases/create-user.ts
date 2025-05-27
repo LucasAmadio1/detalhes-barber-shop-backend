@@ -5,9 +5,15 @@ interface CreateUserRequest {
   email: string
   password: string
   name?: string
+  phone: string
 }
 
-export async function createUser({ email, name, password }: CreateUserRequest) {
+export async function createUser({
+  email,
+  name,
+  password,
+  phone,
+}: CreateUserRequest) {
   const userAlreadyExists = await prisma.user.findFirst({
     where: {
       email,
@@ -26,6 +32,7 @@ export async function createUser({ email, name, password }: CreateUserRequest) {
       email,
       password: hashedPassword,
       name,
+      phone,
     },
   })
 

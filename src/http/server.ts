@@ -10,12 +10,13 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 import { env } from '../env'
-import { createScheduleRoute } from './routes/create-schedule'
-import { createUserRoute } from './routes/create-user'
-import { deleteScheduleRoute } from './routes/delete-schedule'
-import { getSchedulesRoute } from './routes/get-schedules'
-import { signInRoute } from './routes/sign-in'
-import { updatedScheduleRoute } from './routes/updated-schedule'
+import { createScheduleRoute } from './routes/create-schedule-route'
+import { createUserRoute } from './routes/create-user-route'
+import { deleteScheduleRoute } from './routes/delete-schedule-route'
+import { getProfileRoute } from './routes/get-profile-route'
+import { getSchedulesRoute } from './routes/get-schedules-route'
+import { signInRoute } from './routes/sign-in-route'
+import { updatedScheduleRoute } from './routes/updated-schedule-route'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -50,6 +51,7 @@ app.register(createScheduleRoute)
 app.register(updatedScheduleRoute)
 app.register(deleteScheduleRoute)
 app.register(getSchedulesRoute)
+app.register(getProfileRoute)
 
 app
   .listen({
