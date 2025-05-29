@@ -2,10 +2,10 @@
 import { z } from 'zod'
 
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
-import { deleteSchedule } from '../../use-cases/delete-schedule'
+import { canceledSchedule } from '../../use-cases/canceled-schedule'
 import { authenticateUserHook } from '../hooks/authenticate-user'
 
-export const deleteScheduleRoute: FastifyPluginAsyncZod = async (app) => {
+export const canceledScheduleRoute: FastifyPluginAsyncZod = async (app) => {
   app.delete(
     '/schedule/:scheduleId',
     {
@@ -23,7 +23,7 @@ export const deleteScheduleRoute: FastifyPluginAsyncZod = async (app) => {
 
       const { scheduleId } = request.params
 
-      await deleteSchedule({
+      await canceledSchedule({
         userId,
         scheduleId,
       })

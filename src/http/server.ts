@@ -10,10 +10,10 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 import { env } from '../env'
+import { canceledScheduleRoute } from './routes/canceled-schedule-route'
 import { completAppointmentRoute } from './routes/complet-appointment-route'
 import { createScheduleRoute } from './routes/create-schedule-route'
 import { createUserRoute } from './routes/create-user-route'
-import { deleteScheduleRoute } from './routes/delete-schedule-route'
 import { getProfileRoute } from './routes/get-profile-route'
 import { getSchedulesRoute } from './routes/get-schedules-route'
 import { getUserScheduleRoute } from './routes/get-user-schedule-route'
@@ -52,7 +52,7 @@ app.register(createUserRoute)
 app.register(signInRoute)
 app.register(createScheduleRoute)
 app.register(updatedScheduleRoute)
-app.register(deleteScheduleRoute)
+app.register(canceledScheduleRoute)
 app.register(getSchedulesRoute)
 app.register(getProfileRoute)
 app.register(getUserScheduleRoute)

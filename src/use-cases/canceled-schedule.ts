@@ -1,14 +1,14 @@
 import { prisma } from '../lib/prisma'
 
-interface DeleteScheduleParams {
+interface CanceledScheduleParams {
   scheduleId: string
   userId: string
 }
 
-export async function deleteSchedule({
+export async function canceledSchedule({
   scheduleId,
   userId,
-}: DeleteScheduleParams) {
+}: CanceledScheduleParams) {
   const schedule = await prisma.schedule.findFirst({
     where: {
       id: scheduleId,
