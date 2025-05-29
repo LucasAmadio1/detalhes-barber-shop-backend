@@ -30,6 +30,7 @@ export async function deleteSchedule({
     },
     data: {
       deletedAt: new Date(),
+      status: 'CANCELED',
     },
   })
 

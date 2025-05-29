@@ -21,12 +21,20 @@ model User {
   @@map("users")
 }
 
+enum ScheduleStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELED
+}
+
 model Schedule {
-  id         String    @id @default(uuid())
+  id         String         @id @default(uuid())
   userId     String
   scheduleAt DateTime
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  status     ScheduleStatus @default(SCHEDULED)
+  value      String?
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
   deletedAt  DateTime?
 
   user User @relation(fields: [userId], references: [id])

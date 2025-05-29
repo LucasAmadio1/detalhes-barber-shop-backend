@@ -17,16 +17,35 @@ export const getSchedulesRoute: FastifyPluginAsyncZod = async (app) => {
               id: z.string().uuid(),
               userId: z.string().uuid(),
               scheduleAt: z.date(),
+              status: z.string(),
+              value: z.string().nullable(),
               createdAt: z.date(),
+              updatedAt: z.date(),
+              deletedAt: z.date().nullable(),
+              user: z.object({
+                id: z.string().uuid(),
+                name: z.string(),
+                email: z.string().email(),
+                phone: z.string(),
+              }),
             })
           ),
         },
       },
     },
     async (_, reply) => {
-      const { schedules } = await getSchedules()
+      const schedules = await getSchedules()
 
-      return reply.status(200).send(schedules)
+      const sanitizedSchedules = schedules.map((schedule) => ({
+        ...schedule,
+        status: String(schedule.status),
+        user: {
+          ...schedule.user,
+          name: schedule.user.name ?? '',
+        },
+      }))
+
+      return reply.status(200).send(sanitizedSchedules)
     }
   )
 }

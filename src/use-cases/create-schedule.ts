@@ -57,6 +57,7 @@ export async function createSchedule({
     data: {
       userId,
       scheduleAt,
+      status: 'SCHEDULED',
     },
   })
 

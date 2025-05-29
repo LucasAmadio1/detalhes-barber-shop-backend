@@ -2,16 +2,20 @@ import { prisma } from '../lib/prisma'
 
 export async function getSchedules() {
   const schedules = await prisma.schedule.findMany({
-    where: {
-      deletedAt: null,
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+        },
+      },
     },
-    select: {
-      id: true,
-      userId: true,
-      scheduleAt: true,
-      createdAt: true,
+    orderBy: {
+      scheduleAt: 'asc',
     },
   })
 
-  return { schedules }
+  return schedules
 }
