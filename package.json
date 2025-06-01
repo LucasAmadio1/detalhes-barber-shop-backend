@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "detalhes",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/http/server.ts",
   "scripts": {
     "dev": "tsx watch --env-file .env src/http/server.ts"
   },
@@ -29,5 +29,9 @@
     "fastify-type-provider-zod": "^4.0.2",
     "jose": "^6.0.11",
     "zod": "^3.25.7"
+  },
+  "engines": {
+    "node": "22.14.0",
+    "npm": "10.5.2"
   }
 }
