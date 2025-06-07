@@ -36,7 +36,7 @@ export const getSchedulesRoute: FastifyPluginAsyncZod = async (app) => {
     async (_, reply) => {
       const schedules = await getSchedules()
 
-      const sanitizedSchedules = schedules.map((schedule) => ({
+      const sanitizedSchedules = schedules.map((schedule: any) => ({
         ...schedule,
         status: String(schedule.status),
         user: {
