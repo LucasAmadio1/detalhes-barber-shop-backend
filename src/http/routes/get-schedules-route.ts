@@ -1,13 +1,13 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { getSchedules } from '../../use-cases/get-schedules'
-// import { authenticateUserHook } from '../hooks/authenticate-user'
+import { authenticateUserHook } from '../hooks/authenticate-user'
 
 export const getSchedulesRoute: FastifyPluginAsyncZod = async (app) => {
   app.get(
     '/schedules',
     {
-      // onRequest: [authenticateUserHook],
+      onRequest: [authenticateUserHook],
       schema: {
         tags: ['schedule'],
         description: 'get schedules where deletedAt is null',

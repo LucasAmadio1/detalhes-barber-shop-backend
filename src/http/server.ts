@@ -15,6 +15,7 @@ import { completAppointmentRoute } from './routes/complet-appointment-route'
 import { createScheduleRoute } from './routes/create-schedule-route'
 import { createUserRoute } from './routes/create-user-route'
 import { getProfileRoute } from './routes/get-profile-route'
+import { getScheduleDetailsRoute } from './routes/get-schedule.details'
 import { getSchedulesRoute } from './routes/get-schedules-route'
 import { getUserScheduleRoute } from './routes/get-user-schedule-route'
 import { signInRoute } from './routes/sign-in-route'
@@ -57,6 +58,7 @@ app.register(getSchedulesRoute)
 app.register(getProfileRoute)
 app.register(getUserScheduleRoute)
 app.register(completAppointmentRoute)
+app.register(getScheduleDetailsRoute)
 
 app
   .listen({
