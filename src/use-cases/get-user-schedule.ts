@@ -17,7 +17,7 @@ export async function getUserSchedule({ userId }: GetUserScheduleProps) {
   })
 
   if (!schedules) {
-    throw new Error('schedules not found!')
+    throw new Error('Agendamento não encontrado!')
   }
 
   return schedules

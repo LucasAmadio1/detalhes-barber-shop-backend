@@ -1,21 +1,51 @@
 import { prisma } from '../lib/prisma'
 
-export async function getSchedules() {
-  const schedules = await prisma.schedule.findMany({
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          phone: true,
+interface GetSchedulesProps {
+  page: number
+  limit: number
+}
+
+export async function getSchedules({
+  page = 1,
+  limit = 10,
+}: GetSchedulesProps) {
+  const skip = (page - 1) * limit
+
+  const [schedules, total] = await Promise.all([
+    prisma.schedule.findMany({
+      skip,
+      take: limit,
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phone: true,
+          },
         },
       },
-    },
-    orderBy: {
-      scheduleAt: 'asc',
-    },
-  })
+      orderBy: [
+        {
+          status: 'asc',
+        },
+        {
+          scheduleAt: 'desc',
+        },
+      ],
+    }),
+    prisma.schedule.count(),
+  ])
 
-  return schedules
+  const totalPages = Math.ceil(total / limit)
+
+  return {
+    data: schedules,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages,
+    },
+  }
 }

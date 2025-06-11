@@ -10,42 +10,58 @@ export const getSchedulesRoute: FastifyPluginAsyncZod = async (app) => {
       onRequest: [authenticateUserHook],
       schema: {
         tags: ['schedule'],
-        description: 'get schedules where deletedAt is null',
+        description: 'Get schedules with pagination (where deletedAt is null)',
+        querystring: z.object({
+          page: z.coerce.number().int().min(1).default(1),
+          limit: z.coerce.number().int().min(1).max(100).default(10),
+        }),
         response: {
-          200: z.array(
-            z.object({
-              id: z.string().uuid(),
-              userId: z.string().uuid(),
-              scheduleAt: z.date(),
-              status: z.string(),
-              value: z.string().nullable(),
-              createdAt: z.date(),
-              updatedAt: z.date(),
-              deletedAt: z.date().nullable(),
-              user: z.object({
+          200: z.object({
+            data: z.array(
+              z.object({
                 id: z.string().uuid(),
-                name: z.string(),
-                email: z.string().email(),
-                phone: z.string(),
-              }),
-            })
-          ),
+                userId: z.string().uuid(),
+                scheduleAt: z.date(),
+                status: z.string(),
+                value: z.string().nullable(),
+                createdAt: z.date(),
+                updatedAt: z.date(),
+                deletedAt: z.date().nullable(),
+                user: z.object({
+                  id: z.string().uuid(),
+                  name: z.string(),
+                  email: z.string().email(),
+                  phone: z.string(),
+                }),
+              })
+            ),
+            pagination: z.object({
+              page: z.number(),
+              limit: z.number(),
+              total: z.number(),
+              totalPages: z.number(),
+            }),
+          }),
         },
       },
     },
-    async (_, reply) => {
-      const schedules = await getSchedules()
+    async (request, reply) => {
+      const { page, limit } = request.query
 
-      const sanitizedSchedules = schedules.map((schedule: any) => ({
+      const { data, pagination } = await getSchedules({ page, limit })
+
+      const sanitizedSchedules = data.map((schedule: any) => ({
         ...schedule,
-        status: String(schedule.status),
         user: {
           ...schedule.user,
           name: schedule.user.name ?? '',
         },
       }))
 
-      return reply.status(200).send(sanitizedSchedules)
+      return reply.status(200).send({
+        data: sanitizedSchedules,
+        pagination,
+      })
     }
   )
 }

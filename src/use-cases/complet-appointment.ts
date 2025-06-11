@@ -17,11 +17,11 @@ export async function completAppointment({
   })
 
   if (!schedule) {
-    throw new Error('This appointment does not exist or is canceled.')
+    throw new Error('Este agendamento não existe ou foi cancelado.')
   }
 
   if (Number(value) <= 0) {
-    throw new Error('Value must be greater than zero and not empty')
+    throw new Error('O valor deve ser maior que zero.')
   }
 
   await prisma.schedule.update({

@@ -33,11 +33,13 @@ export async function updatedSchedule({
   })
 
   if (!existingSchedule) {
-    throw new Error('schedule not found.')
+    throw new Error('Agendamento não encontrado!')
   }
 
   if (existingSchedule.userId !== userId) {
-    throw new Error('User does not have permission to update this schedule.')
+    throw new Error(
+      'O usuário não tem permissão para atualizar este agendamento.'
+    )
   }
 
   const oneHourBefore = new Date(scheduleAt.getTime() - 60 * 60 * 1000)
@@ -55,9 +57,7 @@ export async function updatedSchedule({
   })
 
   if (scheduleConflict) {
-    throw new Error(
-      'There is already an appointment within 1 hour of this time.'
-    )
+    throw new Error('Já existe um compromisso dentro de 1 hora deste horário.')
   }
 
   const schedule = await prisma.schedule.update({

@@ -16,7 +16,7 @@ export async function signIn({ email, password }: signInRequest) {
   })
 
   if (!user || !(await bcrypt.compare(password, user.password))) {
-    throw new Error('Invalid credentials')
+    throw new Error('usuário ou senha inválidos, tente novamente!')
   }
 
   const token = await authenticatedUser(user.id)

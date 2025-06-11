@@ -27,7 +27,7 @@ export async function getScheduleDetails({
   })
 
   if (!schedule) {
-    throw new Error('Schedule not found!')
+    throw new Error('Agendamento não encontrado!')
   }
 
   return schedule

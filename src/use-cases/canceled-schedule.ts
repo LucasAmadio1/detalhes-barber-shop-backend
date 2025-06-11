@@ -17,11 +17,13 @@ export async function canceledSchedule({
   })
 
   if (!schedule) {
-    throw new Error('Schedule not found.')
+    throw new Error('Agendamento não encontrado! tente novamente mais tarde.')
   }
 
   if (schedule.userId !== userId) {
-    throw new Error('User does not have permission to delete this schedule.')
+    throw new Error(
+      'O usuário não tem permissão para excluir esse agendamento.'
+    )
   }
 
   await prisma.schedule.update({

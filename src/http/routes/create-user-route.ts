@@ -10,15 +10,15 @@ export const createUserRoute: FastifyPluginAsyncZod = async (app) => {
         tags: ['user'],
         description: 'create user',
         body: z.object({
-          email: z.string().email(),
-          name: z.string().min(1).optional(),
-          password: z.string().min(6).max(15),
+          email: z.string(),
+          name: z.string(),
+          password: z.string(),
           phone: z.string(),
         }),
         response: {
           201: z.object({
             id: z.string().uuid(),
-            email: z.string().email(),
+            email: z.string(),
             phone: z.string(),
             name: z.string().optional(),
           }),
@@ -27,6 +27,18 @@ export const createUserRoute: FastifyPluginAsyncZod = async (app) => {
     },
     async (request, reply) => {
       const { email, password, name, phone } = request.body
+
+      if (!email) {
+        throw new Error('O campo e-mail é obrigatório!')
+      }
+
+      if (!password) {
+        throw new Error('O campo de senha é obrigatório!')
+      }
+
+      if (!phone) {
+        throw new Error('O campo de celular é obrigatório!')
+      }
 
       const user = await createUser({ email, password, name, phone })
 

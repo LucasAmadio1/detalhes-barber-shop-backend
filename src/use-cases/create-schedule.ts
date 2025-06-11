@@ -16,11 +16,13 @@ export async function createSchedule({
   const scheduleAt = parse(dateTimeString, 'dd/MM/yyyy HH:mm', new Date())
 
   if (scheduleAt < new Date()) {
-    throw new Error('You cannot schedule an appointment in the past.')
+    throw new Error(
+      'Não é possível agendar no passado. por gentileza, escolha outra data.'
+    )
   }
 
   if (!isValid(scheduleAt)) {
-    throw new Error('Invalid date/time format.')
+    throw new Error('Formato de data/hora inválido.')
   }
 
   const user = await prisma.user.findFirst({
@@ -31,7 +33,7 @@ export async function createSchedule({
   })
 
   if (!user) {
-    throw new Error('User not found!')
+    throw new Error('Usuário não encontrado.')
   }
 
   const oneHourBefore = new Date(scheduleAt.getTime() - 60 * 60 * 1000)
@@ -49,7 +51,7 @@ export async function createSchedule({
 
   if (scheduleConflict) {
     throw new Error(
-      'There is already an appointment within 1 hour of this time.'
+      'Há um agendamento dentro deste horário. Por gentileza, escolha outro horário.'
     )
   }
 
