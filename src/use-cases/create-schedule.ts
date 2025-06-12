@@ -1,6 +1,5 @@
 import { isValid, parse } from 'date-fns'
 import { prisma } from '../lib/prisma'
-
 interface CreateScheduleRequest {
   userId: string
   date: string
@@ -14,6 +13,8 @@ export async function createSchedule({
 }: CreateScheduleRequest) {
   const dateTimeString = `${date} ${time}`
   const scheduleAt = parse(dateTimeString, 'dd/MM/yyyy HH:mm', new Date())
+
+  scheduleAt.setHours(scheduleAt.getHours() + 3)
 
   if (scheduleAt < new Date()) {
     throw new Error(
