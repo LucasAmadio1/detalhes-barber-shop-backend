@@ -4,12 +4,16 @@ interface CreateScheduleRequest {
   userId: string
   date: string
   time: string
+  name: string
+  phone: string
 }
 
 export async function createSchedule({
+  name,
   userId,
   date,
   time,
+  phone,
 }: CreateScheduleRequest) {
   const dateTimeString = `${date} ${time}`
   const scheduleAt = parse(dateTimeString, 'dd/MM/yyyy HH:mm', new Date())
@@ -26,15 +30,8 @@ export async function createSchedule({
     throw new Error('Formato de data/hora inválido.')
   }
 
-  const user = await prisma.user.findFirst({
-    where: {
-      id: userId,
-      deletedAt: null,
-    },
-  })
-
-  if (!user) {
-    throw new Error('Usuário não encontrado.')
+  if (!name) {
+    throw new Error('É necessário informar o nome do cliente.')
   }
 
   const oneHourBefore = new Date(scheduleAt.getTime() - 60 * 60 * 1000)
@@ -58,9 +55,11 @@ export async function createSchedule({
 
   const schedule = await prisma.schedule.create({
     data: {
-      userId,
+      userId: userId,
       scheduleAt,
       status: 'SCHEDULED',
+      clientName: name,
+      clientPhone: phone,
     },
   })
 

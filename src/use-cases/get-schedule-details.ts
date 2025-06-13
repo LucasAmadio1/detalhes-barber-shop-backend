@@ -16,6 +16,8 @@ export async function getScheduleDetails({
       status: true,
       scheduleAt: true,
       value: true,
+      clientName: true,
+      clientPhone: true,
       user: {
         select: {
           name: true,

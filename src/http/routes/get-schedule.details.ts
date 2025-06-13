@@ -20,6 +20,8 @@ export const getScheduleDetailsRoute: FastifyPluginAsyncZod = async (app) => {
             scheduleAt: z.date(),
             status: z.string(),
             value: z.string().nullable(),
+            clientName: z.string(),
+            clientPhone: z.string(),
             user: z.object({
               email: z.string().email(),
               name: z.string().nullable(),
@@ -39,6 +41,8 @@ export const getScheduleDetailsRoute: FastifyPluginAsyncZod = async (app) => {
         id: scheduleDetails.id,
         scheduleAt: scheduleDetails.scheduleAt,
         status: scheduleDetails.status,
+        clientName: scheduleDetails.clientName || '',
+        clientPhone: scheduleDetails.clientPhone || '',
         user: {
           email: scheduleDetails.user.email,
           name: scheduleDetails.user.name,

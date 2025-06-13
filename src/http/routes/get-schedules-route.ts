@@ -19,14 +19,13 @@ export const getSchedulesRoute: FastifyPluginAsyncZod = async (app) => {
           200: z.object({
             data: z.array(
               z.object({
-                id: z.string().uuid(),
-                userId: z.string().uuid(),
-                scheduleAt: z.date(),
-                status: z.string(),
                 value: z.string().nullable(),
+                status: z.string(),
+                id: z.string().uuid(),
+                scheduleAt: z.date(),
+                clientName: z.string().nullable(),
+                clientPhone: z.string().nullable(),
                 createdAt: z.date(),
-                updatedAt: z.date(),
-                deletedAt: z.date().nullable(),
                 user: z.object({
                   id: z.string().uuid(),
                   name: z.string(),
@@ -50,11 +49,11 @@ export const getSchedulesRoute: FastifyPluginAsyncZod = async (app) => {
 
       const { data, pagination } = await getSchedules({ page, limit })
 
-      const sanitizedSchedules = data.map((schedule: any) => ({
+      const sanitizedSchedules = data.map((schedule) => ({
         ...schedule,
         user: {
           ...schedule.user,
-          name: schedule.user.name ?? '',
+          name: schedule.user.name ?? '', // forçando string
         },
       }))
 

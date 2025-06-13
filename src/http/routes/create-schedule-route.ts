@@ -17,6 +17,8 @@ export const createScheduleRoute: FastifyPluginAsyncZod = async (app) => {
         body: z.object({
           date: z.string(),
           time: z.string(),
+          name: z.string(),
+          phone: z.string(),
         }),
         response: {
           201: z.object({
@@ -29,9 +31,15 @@ export const createScheduleRoute: FastifyPluginAsyncZod = async (app) => {
     },
     async (request, reply) => {
       const userId = request.user.sub
-      const { date, time } = request.body
+      const { date, time, name, phone } = request.body
 
-      const { schedule } = await createSchedule({ date, time, userId })
+      const { schedule } = await createSchedule({
+        date,
+        time,
+        userId,
+        name,
+        phone,
+      })
 
       return reply.status(201).send({
         scheduleId: schedule.id,

@@ -15,7 +15,14 @@ export async function getSchedules({
     prisma.schedule.findMany({
       skip,
       take: limit,
-      include: {
+      select: {
+        id: true,
+        scheduleAt: true,
+        clientName: true,
+        clientPhone: true,
+        createdAt: true,
+        status: true,
+        value: true,
         user: {
           select: {
             id: true,
