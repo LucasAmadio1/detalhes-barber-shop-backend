@@ -37,7 +37,7 @@ export async function getSchedules({
           status: 'asc',
         },
         {
-          scheduleAt: 'desc',
+          scheduleAt: 'asc',
         },
       ],
     }),

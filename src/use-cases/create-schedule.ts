@@ -34,8 +34,8 @@ export async function createSchedule({
     throw new Error('É necessário informar o nome do cliente.')
   }
 
-  const oneHourBefore = new Date(scheduleAt.getTime() - 60 * 60 * 1000)
-  const oneHourAfter = new Date(scheduleAt.getTime() + 60 * 60 * 1000)
+  const oneHourBefore = new Date(scheduleAt.getTime() - 80 * 60 * 1000)
+  const oneHourAfter = new Date(scheduleAt.getTime() + 80 * 60 * 1000)
 
   const scheduleConflict = await prisma.schedule.findFirst({
     where: {
